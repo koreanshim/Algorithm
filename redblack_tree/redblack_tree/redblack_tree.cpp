@@ -9,18 +9,18 @@ using namespace std;
 
 class Node {
 public:
-	int id; //ID(ÇÊµå1)			[A]
-	string name; //ÀÌ¸§(ÇÊµå2)	[N] 
-	int volume; //¿ë·®(ÇÊµå3)	[S]
-	int price;  //°¡°İ(ÇÊµå4)	[P]
+	int id; //ID(í•„ë“œ1)			[A]
+	string name; //ì´ë¦„(í•„ë“œ2)	[N] 
+	int volume; //ìš©ëŸ‰(í•„ë“œ3)	[S]
+	int price;  //ê°€ê²©(í•„ë“œ4)	[P]
 	bool color; //false=red, true=black
 
-	Node* leftChildNode; //¿ŞÂÊÀÚ½Ä³ëµå
-	Node* rightChildNode; //¿À¸¥ÂÊÀÚ½Ä³ëµå
-	Node* parentNode; //ºÎ¸ğ³ëµå
+	Node* leftChildNode; //ì™¼ìª½ìì‹ë…¸ë“œ
+	Node* rightChildNode; //ì˜¤ë¥¸ìª½ìì‹ë…¸ë“œ
+	Node* parentNode; //ë¶€ëª¨ë…¸ë“œ
 	
 
-	Node(int id, string name, int volume, int price, bool color) { //ÃÊ±âÈ­
+	Node(int id, string name, int volume, int price, bool color) { //ì´ˆê¸°í™”
 		this->id = id;
 		this->name = name;
 		this->volume = volume;
@@ -35,14 +35,14 @@ public:
 
 class RedBlackTree {
 public:
-	int size; //insertÇÏ¸é¼­ Áõ°¡
+	int size; //insertí•˜ë©´ì„œ ì¦ê°€
 	int rangeX;
 	int rangeY;
 	double discountRate;
 
 	Node* rootNode;
 
-	RedBlackTree() { //ÃÊ±âÈ­
+	RedBlackTree() { //ì´ˆê¸°í™”
 		this->size = 0;
 		this->rangeX = 0;
 		this->rangeY = 0;
@@ -60,58 +60,58 @@ public:
 		inorderPrint(currentNode->rightChildNode);
 	}
 
-	int getDepth(int _id) { //id¿¡ ÇØ´çÇÏ´Â nodeÀÇ depth Ã£±â. depth of root = 0
+	int getDepth(int _id) { //idì— í•´ë‹¹í•˜ëŠ” nodeì˜ depth ì°¾ê¸°. depth of root = 0
 		Node* tempNode = rootNode;
-		int depth = 0; //±íÀÌ Ä«¿îÅÍ
+		int depth = 0; //ê¹Šì´ ì¹´ìš´í„°
 
 		while (tempNode != nullptr) {
 			if (tempNode->id == _id) {
-				return depth; //ÇöÀç ±íÀÌ ¹İÈ¯!
+				return depth; //í˜„ì¬ ê¹Šì´ ë°˜í™˜!
 			}
 			else if (tempNode->id > _id) {
-				tempNode = tempNode->leftChildNode; //¿ŞÂÊ³ëµå·Î ÀÌµ¿
+				tempNode = tempNode->leftChildNode; //ì™¼ìª½ë…¸ë“œë¡œ ì´ë™
 			}
 			else if (tempNode->id < _id) {
-			tempNode = tempNode->rightChildNode; //¿À¸¥ÂÊ ³ëµå·Î ÀÌµ¿
+			tempNode = tempNode->rightChildNode; //ì˜¤ë¥¸ìª½ ë…¸ë“œë¡œ ì´ë™
 			}
 
-			depth++; //³ëµå ÀÌµ¿ÇÒ ¶§¸¶´Ù ±íÀÌ Áõ°¡
+			depth++; //ë…¸ë“œ ì´ë™í•  ë•Œë§ˆë‹¤ ê¹Šì´ ì¦ê°€
 		}
 
 		return depth;
 	}
 
-	Node* findNode(int _id) { //node°¡ Á¸ÀçÇÏ´ÂÁö Ã£±â
+	Node* findNode(int _id) { //nodeê°€ ì¡´ì¬í•˜ëŠ”ì§€ ì°¾ê¸°
 		Node* tempNode = rootNode;
 
 		while (tempNode != nullptr) {
 			if (tempNode->id == _id) {
-				return tempNode; //ÇöÀç ³ëµå ¹İÈ¯!
+				return tempNode; //í˜„ì¬ ë…¸ë“œ ë°˜í™˜!
 			}
 			else if (tempNode->id > _id) {
-				tempNode = tempNode->leftChildNode; //¿ŞÂÊ ³ëµå·Î ÀÌµ¿
+				tempNode = tempNode->leftChildNode; //ì™¼ìª½ ë…¸ë“œë¡œ ì´ë™
 			}
 			else if (tempNode->id < _id) {
-				tempNode = tempNode->rightChildNode; //¿À¸¥ÂÊ ³ëµå·Î ÀÌµ¿
+				tempNode = tempNode->rightChildNode; //ì˜¤ë¥¸ìª½ ë…¸ë“œë¡œ ì´ë™
 			}
 		}
 
-		return NULL; //Á¸ÀçÇÏÁö ¾ÊÀ» °æ¿ì NULL¹İÈ¯
+		return NULL; //ì¡´ì¬í•˜ì§€ ì•Šì„ ê²½ìš° NULLë°˜í™˜
 	}
 
 
 	bool getUncleColor(Node* currentNode) {
 		Node* dadNode = currentNode->parentNode;
 		Node* grandpaNode = dadNode->parentNode;
-		bool uncleColor = black; //external property¸¦ ´ëºñÇØ¼­ blackÀ¸·Î ¼³Á¤
+		bool uncleColor = black; //external propertyë¥¼ ëŒ€ë¹„í•´ì„œ blackìœ¼ë¡œ ì„¤ì •
 
-		if (grandpaNode->leftChildNode == dadNode) { //uncleÀÌ Á¶ºÎ¸ğ ±âÁØ ¿À¸¥ÂÊ¿¡ ÀÖÀ» °æ¿ì
-			if (grandpaNode->rightChildNode != nullptr) { //uncleÀÌ ¾øÁö ¾ÊÀ¸¸é
+		if (grandpaNode->leftChildNode == dadNode) { //uncleì´ ì¡°ë¶€ëª¨ ê¸°ì¤€ ì˜¤ë¥¸ìª½ì— ìˆì„ ê²½ìš°
+			if (grandpaNode->rightChildNode != nullptr) { //uncleì´ ì—†ì§€ ì•Šìœ¼ë©´
 				uncleColor = grandpaNode->rightChildNode->color;
 			}
 		}
-		else if (grandpaNode->rightChildNode == dadNode) { //uncleÀÌ Á¶ºÎ¸ğ ±âÁØ ¿ŞÂÊ¿¡ ÀÖÀ» °æ¿ì
-			if (grandpaNode->leftChildNode != nullptr) { //uncleÀÌ ¾øÁö ¾ÊÀ¸¸é
+		else if (grandpaNode->rightChildNode == dadNode) { //uncleì´ ì¡°ë¶€ëª¨ ê¸°ì¤€ ì™¼ìª½ì— ìˆì„ ê²½ìš°
+			if (grandpaNode->leftChildNode != nullptr) { //uncleì´ ì—†ì§€ ì•Šìœ¼ë©´
 				uncleColor = grandpaNode->leftChildNode->color;
 			}
 		}
@@ -119,20 +119,20 @@ public:
 		return uncleColor;
 	}
 
-	void reStructure(Node* currentNode) { //restructuring->4°¡Áö °æ¿ì
+	void reStructure(Node* currentNode) { //restructuring->4ê°€ì§€ ê²½ìš°
 		Node* dadNode = currentNode->parentNode;
 		Node* grandpaNode = dadNode->parentNode;
 		Node* greatgrandpaNode = grandpaNode->parentNode;
 
 		if (grandpaNode->id < dadNode->id) {
-			if (dadNode->id > currentNode->id) { //ppt 1¹ø ÄÉÀÌ½º
+			if (dadNode->id > currentNode->id) { //ppt 1ë²ˆ ì¼€ì´ìŠ¤
 				grandpaNode->rightChildNode = currentNode->leftChildNode;
-				if (currentNode->leftChildNode != nullptr) { //current³ëµåÀÇ ¿ŞÀÚ½ÄÀÌ ÀÖÀ» ¶§¿¡¸¸
-					currentNode->leftChildNode->parentNode = grandpaNode; //°ü°è ¿¬°á½ÃÅ°±â
+				if (currentNode->leftChildNode != nullptr) { //currentë…¸ë“œì˜ ì™¼ìì‹ì´ ìˆì„ ë•Œì—ë§Œ
+					currentNode->leftChildNode->parentNode = grandpaNode; //ê´€ê³„ ì—°ê²°ì‹œí‚¤ê¸°
 				}
 				dadNode->leftChildNode = currentNode->rightChildNode;
-				if (currentNode->rightChildNode != nullptr) { //current³ëµåÀÇ ¿À¸¥ÀÚ½ÄÀÌ ÀÖÀ» ¶§¿¡¸¸
-					currentNode->rightChildNode->parentNode = dadNode; //°ü°è ¿¬°á½ÃÅ°±â
+				if (currentNode->rightChildNode != nullptr) { //currentë…¸ë“œì˜ ì˜¤ë¥¸ìì‹ì´ ìˆì„ ë•Œì—ë§Œ
+					currentNode->rightChildNode->parentNode = dadNode; //ê´€ê³„ ì—°ê²°ì‹œí‚¤ê¸°
 				}
 
 				currentNode->leftChildNode = grandpaNode;
@@ -140,19 +140,19 @@ public:
 				currentNode->rightChildNode = dadNode;
 				dadNode->parentNode = currentNode;
 
-				if (greatgrandpaNode != nullptr) { //ÁõÁ¶ºÎ°¡ Á¸ÀçÇÏ¸é
-					if (currentNode->id < greatgrandpaNode->id) { //ÁõÁ¶ºÎº¸´Ù ÀÛÀ» ¶§
+				if (greatgrandpaNode != nullptr) { //ì¦ì¡°ë¶€ê°€ ì¡´ì¬í•˜ë©´
+					if (currentNode->id < greatgrandpaNode->id) { //ì¦ì¡°ë¶€ë³´ë‹¤ ì‘ì„ ë•Œ
 						greatgrandpaNode->leftChildNode = currentNode;
 						currentNode->parentNode = greatgrandpaNode;
 					}
-					else if (currentNode->id > greatgrandpaNode->id) { //ÁõÁ¶ºÎ º¸´Ù Å¬ ¶§
+					else if (currentNode->id > greatgrandpaNode->id) { //ì¦ì¡°ë¶€ ë³´ë‹¤ í´ ë•Œ
 						greatgrandpaNode->rightChildNode = currentNode;
 						currentNode->parentNode = greatgrandpaNode;
 					}
 				}
-				else { //ÁõÁ¶ºÎ°¡ Á¸ÀçÇÏÁö ¾ÊÀ¸¸é
-					rootNode = currentNode; //current³ëµå°¡ root³ëµå°¡ µÊ
-					currentNode->parentNode = nullptr; //current³ëµåÀÇ ºÎ¸ğ³ëµå´Â ¾øÀ½
+				else { //ì¦ì¡°ë¶€ê°€ ì¡´ì¬í•˜ì§€ ì•Šìœ¼ë©´
+					rootNode = currentNode; //currentë…¸ë“œê°€ rootë…¸ë“œê°€ ë¨
+					currentNode->parentNode = nullptr; //currentë…¸ë“œì˜ ë¶€ëª¨ë…¸ë“œëŠ” ì—†ìŒ
 				}
 				
 				grandpaNode->color = red;
@@ -161,7 +161,7 @@ public:
 
 				return;
 			}
-			else if (dadNode->id < currentNode->id) { //ppt 4¹ø ÄÉÀÌ½º
+			else if (dadNode->id < currentNode->id) { //ppt 4ë²ˆ ì¼€ì´ìŠ¤
 				grandpaNode->rightChildNode = dadNode->leftChildNode;
 				if (dadNode->leftChildNode != nullptr) {
 					dadNode->leftChildNode->parentNode = grandpaNode;
@@ -192,7 +192,7 @@ public:
 			}
 		}
 		else if (grandpaNode->id > dadNode->id) {
-			if (dadNode->id > currentNode->id) { //ppt 3¹ø ÄÉÀÌ½º
+			if (dadNode->id > currentNode->id) { //ppt 3ë²ˆ ì¼€ì´ìŠ¤
 				grandpaNode->leftChildNode = dadNode->rightChildNode;
 				if (dadNode->rightChildNode != nullptr) {
 					dadNode->rightChildNode->parentNode = grandpaNode;
@@ -221,7 +221,7 @@ public:
 
 				return;
 			}
-			else if (dadNode->id < currentNode->id) { //ppt 2¹ø ÄÉÀÌ½º
+			else if (dadNode->id < currentNode->id) { //ppt 2ë²ˆ ì¼€ì´ìŠ¤
 				dadNode->rightChildNode = currentNode->leftChildNode;
 				if (currentNode->leftChildNode != nullptr) {
 					currentNode->leftChildNode->parentNode = dadNode;
@@ -262,11 +262,11 @@ public:
 	Node* reColor(Node* currentNode) { //recoloring
 		Node* grandpaNode = currentNode->parentNode->parentNode;
 
-		grandpaNode->color = red; //Á¶ºÎ¸ğ´Â red
+		grandpaNode->color = red; //ì¡°ë¶€ëª¨ëŠ” red
 		grandpaNode->leftChildNode->color = black;
-		grandpaNode->rightChildNode->color = black; //ºÎ¸ğ¿Í uncle ÀüºÎ black
+		grandpaNode->rightChildNode->color = black; //ë¶€ëª¨ì™€ uncle ì „ë¶€ black
 
-		if (grandpaNode == rootNode) { //Á¶ºÎ¸ğ°¡ rootnode ÀÏ ¶§
+		if (grandpaNode == rootNode) { //ì¡°ë¶€ëª¨ê°€ rootnode ì¼ ë•Œ
 			grandpaNode->color = black;
 		}
 
@@ -275,66 +275,66 @@ public:
 
 	void doubleRed(Node* currentNode) {
 		Node* tempNode = nullptr;
-		//double red ÀÏ ¼ö ¾ø´Â Á¶°Ç
-		if (currentNode == rootNode) { //rootÀÎ °æ¿ì
+		//double red ì¼ ìˆ˜ ì—†ëŠ” ì¡°ê±´
+		if (currentNode == rootNode) { //rootì¸ ê²½ìš°
 			return;
 		}
-		if (currentNode->color == black) { //ÇØ´ç ³ëµå°¡ blackÀÏ ¶§
+		if (currentNode->color == black) { //í•´ë‹¹ ë…¸ë“œê°€ blackì¼ ë•Œ
 			return;
 		}
-		if (currentNode->parentNode->color == black) { //ÇØ´ç ³ëµåÀÇ ºÎ¸ğ³ëµå°¡ blackÀÏ ¶§
+		if (currentNode->parentNode->color == black) { //í•´ë‹¹ ë…¸ë“œì˜ ë¶€ëª¨ë…¸ë“œê°€ blackì¼ ë•Œ
 			return;
 		}
-		//double redÀÏ Á¶°Ç
+		//double redì¼ ì¡°ê±´
 		if (getUncleColor(currentNode) == black) { 
 			reStructure(currentNode);
 
-			return; //restructureÈÄ
+			return; //restructureí›„
 		}
 		else if (getUncleColor(currentNode) == red) {
 			tempNode = reColor(currentNode);
-			//recolorÈÄ¿¡µµ ºÎ¸ğ, Á¶ºÎ¿¡¼­ double red ¹ß»ı °¡´É
+			//recolorí›„ì—ë„ ë¶€ëª¨, ì¡°ë¶€ì—ì„œ double red ë°œìƒ ê°€ëŠ¥
 		}
 		
-		doubleRed(tempNode); //recoloringÇÒ ¶§ À§·Îµµ double red°¡ »ı±â´ÂÁö È®ÀÎÇÏ±â
+		doubleRed(tempNode); //recoloringí•  ë•Œ ìœ„ë¡œë„ double redê°€ ìƒê¸°ëŠ”ì§€ í™•ì¸í•˜ê¸°
 	}
 
-	void Insert(int _id, string _name, int _volume, int _price) { //(1) ¾îÇÃ¸®ÄÉÀÌ¼Ç µî·Ï
-		Node* newNode = new Node(_id, _name, _volume, _price, red); //»õ·Î ÀÔ·ÂµÈ ³ëµå´Â Ç×»ó red
+	void Insert(int _id, string _name, int _volume, int _price) { //(1) ì–´í”Œë¦¬ì¼€ì´ì…˜ ë“±ë¡
+		Node* newNode = new Node(_id, _name, _volume, _price, red); //ìƒˆë¡œ ì…ë ¥ëœ ë…¸ë“œëŠ” í•­ìƒ red
 		
-		if (size == 0) { //isEmpty()ÀÎ °æ¿ì
-			rootNode = newNode; //rootÀÔ·Â
+		if (size == 0) { //isEmpty()ì¸ ê²½ìš°
+			rootNode = newNode; //rootì…ë ¥
 			rootNode->color = black; //root property
 			
 			cout << 0 << endl;
 			this->size++;
 		}
-		else { //isEmpty()°¡ ¾Æ´Ñ °æ¿ì
-			Node* tempNode = findNode(_id); //ÀÌ¹Ì Á¸ÀçÇÏ´Â Áö °Ë»ö
+		else { //isEmpty()ê°€ ì•„ë‹Œ ê²½ìš°
+			Node* tempNode = findNode(_id); //ì´ë¯¸ ì¡´ì¬í•˜ëŠ” ì§€ ê²€ìƒ‰
 			
-			if (tempNode != NULL) { //ÀÌ¹Ì Á¸Àç
-				cout << getDepth(tempNode->id) << endl; //Á¸ÀçÇÏ´Â ³ëµåÀÇ depth Ãâ·Â
+			if (tempNode != NULL) { //ì´ë¯¸ ì¡´ì¬
+				cout << getDepth(tempNode->id) << endl; //ì¡´ì¬í•˜ëŠ” ë…¸ë“œì˜ depth ì¶œë ¥
 			}
 			//--------------------------------------------------------------DOUBLE RED POSSIBILITY-----
-			else { //ÀÌ¹Ì Á¸ÀçÇÏÁö ¾ÊÀ½
+			else { //ì´ë¯¸ ì¡´ì¬í•˜ì§€ ì•ŠìŒ
 				Node* currentNode = rootNode; 
 				Node* saveNode = nullptr;
 				while (currentNode != nullptr) {
 					saveNode = currentNode;
 
-					if (newNode->id < currentNode->id) { //_id°¡ ÇöÀç idº¸´Ù ÀÛÀ» ¶§
-						currentNode = currentNode->leftChildNode; //ÇöÀç ³ëµåÀÇ ¿ŞÂÊÀ¸·Î
+					if (newNode->id < currentNode->id) { //_idê°€ í˜„ì¬ idë³´ë‹¤ ì‘ì„ ë•Œ
+						currentNode = currentNode->leftChildNode; //í˜„ì¬ ë…¸ë“œì˜ ì™¼ìª½ìœ¼ë¡œ
 					}
-					else if (newNode->id > currentNode->id) { //_id°¡ ÇöÀç idº¸´Ù Å¬ ¶§
-						currentNode = currentNode->rightChildNode;//ÇöÀç ³ëµåÀÇ ¿À¸¥ÂÊÀ¸·Î
+					else if (newNode->id > currentNode->id) { //_idê°€ í˜„ì¬ idë³´ë‹¤ í´ ë•Œ
+						currentNode = currentNode->rightChildNode;//í˜„ì¬ ë…¸ë“œì˜ ì˜¤ë¥¸ìª½ìœ¼ë¡œ
 					}
 				}
 				
-				if (newNode->id < saveNode->id) { //leftchild·Î ÁöÁ¤
+				if (newNode->id < saveNode->id) { //leftchildë¡œ ì§€ì •
 					saveNode->leftChildNode = newNode;
 					newNode->parentNode = saveNode;
 				}
-				else if(saveNode->id < newNode->id) { //rightchild·Î ÁöÁ¤
+				else if(saveNode->id < newNode->id) { //rightchildë¡œ ì§€ì •
 					saveNode->rightChildNode = newNode;
 					newNode->parentNode = saveNode;
 				} 
@@ -348,7 +348,7 @@ public:
 		}
 	}
 
-	void Search(int _id) { //(2) ¾îÇÃ¸®ÄÉÀÌ¼Ç °Ë»ö
+	void Search(int _id) { //(2) ì–´í”Œë¦¬ì¼€ì´ì…˜ ê²€ìƒ‰
 		Node* currentNode = findNode(_id);
 		if (currentNode == NULL) {
 			cout << "NULL" << endl;
@@ -358,13 +358,13 @@ public:
 		}
 	}
 
-	void Update(int _id, string _name, int _volume, int _price) { //(3) ¾îÇÃ¸®ÄÉÀÌ¼Ç ¾÷µ¥ÀÌÆ®
-		Node* tempNode = findNode(_id); //ÀÌ¹Ì Á¸ÀçÇÏ´Â Áö °Ë»ö
+	void Update(int _id, string _name, int _volume, int _price) { //(3) ì–´í”Œë¦¬ì¼€ì´ì…˜ ì—…ë°ì´íŠ¸
+		Node* tempNode = findNode(_id); //ì´ë¯¸ ì¡´ì¬í•˜ëŠ” ì§€ ê²€ìƒ‰
 
-		if (tempNode == NULL) { //ÀÌ¹Ì Á¸ÀçÇÏÁö ¾ÊÀ½
+		if (tempNode == NULL) { //ì´ë¯¸ ì¡´ì¬í•˜ì§€ ì•ŠìŒ
 			cout << "NULL" << endl;
 		}
-		else { //ÀÌ¹Ì Á¸ÀçÇÔ
+		else { //ì´ë¯¸ ì¡´ì¬í•¨
 			tempNode->name = _name;
 			tempNode->volume = _volume;
 			tempNode->price = _price;
@@ -373,21 +373,21 @@ public:
 		}
 	}
 
-	void Discount(int _rangeX, int _rangeY, int _discountRate) { //(4) ¾îÇÃ¸®ÄÉÀÌ¼Ç Å½»ö
+	void Discount(int _rangeX, int _rangeY, int _discountRate) { //(4) ì–´í”Œë¦¬ì¼€ì´ì…˜ íƒìƒ‰
 		this->rangeX = _rangeX;
 		this->rangeY = _rangeY;
 		this->discountRate = (double)(100 - _discountRate) / 100;
 
-		inorderDiscount(rootNode); //root³ëµåºÎÅÍ °Ë»ö ½ÃÀÛÇØ¼­ ÇØ´ç±¸°£ discount ÁøÇà
+		inorderDiscount(rootNode); //rootë…¸ë“œë¶€í„° ê²€ìƒ‰ ì‹œì‘í•´ì„œ í•´ë‹¹êµ¬ê°„ discount ì§„í–‰
 	}
 
-	void disCount(Node* currentNode) { //nodeµé ÇÒÀÎÇÏ±â
+	void disCount(Node* currentNode) { //nodeë“¤ í• ì¸í•˜ê¸°
 		if (rangeX <= currentNode->id && currentNode->id <= rangeY) {
 			currentNode->price = (currentNode->price) * discountRate;
 		}
 	}
 
-	void inorderDiscount(Node* currentNode) { //ÁßÀ§¼øÈ¸
+	void inorderDiscount(Node* currentNode) { //ì¤‘ìœ„ìˆœíšŒ
 		if (currentNode->leftChildNode != nullptr) {
 			inorderDiscount(currentNode->leftChildNode);
 		}
